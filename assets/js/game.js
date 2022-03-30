@@ -31,11 +31,17 @@ var randomNumber = function(min, max) {
 
   // fight function (now with parameter for enemy's object holding name, health, and attack values)
   var fight = function(enemy) {
+    var isPlayerTurn = true;
+      if (Math.random() > 0.5) {
+        isPlayerTurn = false;
+      }
+
     while (playerInfo.health > 0 && enemy.health > 0) {
       // ask player if they'd like to fight or run
-      if (fightOrSkip()) {
-        break;
-      }
+      if (isPlayerTurn) {
+        if (fightOrSkip()) {
+         break;
+       }
       // generate random damage value based on player's attack power
       var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
   
@@ -73,7 +79,9 @@ var randomNumber = function(min, max) {
         break;
       } else {
         window.alert(playerInfo.name + ' still has ' + playerInfo.health + ' health left.');
+        }
       }
+      isPlayerTurn =!isPlayerTurn;
     }
   };
   
@@ -84,6 +92,7 @@ var randomNumber = function(min, max) {
   
     // fight each enemy robot by looping over them and fighting them one at a time
     for (var i = 0; i < enemyInfo.length; i++) {
+
       // if player is still alive, keep fight next enemy
       if (playerInfo.health > 0) {
         // let player know what round they are in, remember that arrays start at 0 so it needs to have 1 added to it
